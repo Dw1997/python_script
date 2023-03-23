@@ -8,6 +8,7 @@
 import curses
 import time
 import requests
+import datetime
 
 headers = {
 	'Host': 'push2.eastmoney.com',
@@ -19,7 +20,9 @@ headers = {
 
 secid = [
 	'000821',
-	'600745'
+	'600745',
+	'000762',
+	'600338'
 ]
 
 secids = []
@@ -64,6 +67,11 @@ class ConsoleDisplay:
 
 	def update(self):
 		while self.running:
+			noww = datetime.datetime.now()
+			if noww.hour >= 11 and noww.minute > 30 and noww.hour < 13:
+				time.sleep(5)
+				continue
+
 			rows = self.get_values()
 			for row_index, row in enumerate(rows):
 				now_price = row['f2']
@@ -78,7 +86,7 @@ class ConsoleDisplay:
 		curses.cbreak()
 		self.screen.nodelay(1)
 
-		self.screen.addstr(1, 1, " " * 14*len(secids))  # 清空该行
+		self.screen.addstr(1, 1, " " * 14 * len(secids))  # 清空该行
 		self.screen.addstr(1, 1, 'secid')
 		self.screen.addstr(1, 15, 'now_price')
 		self.screen.addstr(1, 29, 'dp_rate')
