@@ -71,8 +71,10 @@ class ConsoleDisplay:
 			if noww.hour >= 11 and noww.minute > 30 and noww.hour < 13:
 				time.sleep(5)
 				continue
-
-			rows = self.get_values()
+			try:
+				rows = self.get_values()
+			except:
+				continue
 			for row_index, row in enumerate(rows):
 				now_price = row['f2']
 				dp_rate = row['f3']
