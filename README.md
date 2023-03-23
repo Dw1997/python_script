@@ -1,0 +1,1 @@
+# termux->debian 的python脚本
